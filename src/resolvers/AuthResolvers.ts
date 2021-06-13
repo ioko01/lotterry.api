@@ -5,6 +5,7 @@ import { GMT } from "../utils/time";
 import bcrypt from "bcrypt";
 import { UserStatusEnum } from "../models/User";
 import { createToken, sendToken } from "../handlers/TokenHandler";
+import { MessagesEntity } from "../entities/MessagesEntity";
 
 @Resolver()
 export class AuthResolvers {
@@ -40,12 +41,30 @@ export class AuthResolvers {
                     throw new Error("EXPIRE");
                 default:
             }
-            
+
             const token = createToken(user.id, user.tokenVersion);
-            
+
             sendToken(res, token);
 
             return user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Mutation(() => MessagesEntity, { nullable: true })
+    async signout(
+        @Ctx() { req, res }: AppContext
+    ): Promise<MessagesEntity | null> {
+        try {
+            const user = await UsersModel.findById(req.UID);
+            if (!user) return null;
+
+            user.tokenVersion = user.tokenVersion + 1;
+            await user.save();
+
+            res.clearCookie(process.env.COOKIE_NAME!);
+            return { message: "logout" };
         } catch (error) {
             throw error;
         }

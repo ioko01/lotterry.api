@@ -15,8 +15,14 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+"""Message"""
+type MessagesEntity {
+  message: String!
+}
+
 type Mutation {
   signin(password: String!, username: String!): UsersEntity
+  signout: MessagesEntity
 }
 
 """Child"""

@@ -24,14 +24,14 @@ export default async () => {
                 createSuperAdmin();
                 if (token) {
                     const decodedToken = verifyToken(token) as {
-                        userId: string;
+                        UID: string;
                         tokenVersion: number;
                         iat: number;
                         exp: number;
                     } | null;
 
                     if (decodedToken) {
-                        req.UID = decodedToken.userId;
+                        req.UID = decodedToken.UID;
                         req.tokenVersion = decodedToken.tokenVersion;
                         const user = await UsersModel.findById(req.UID);
                         if (user) {

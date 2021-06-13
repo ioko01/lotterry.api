@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { UserStatusEnum } from "../models/User";
 import { createToken, sendToken } from "../handlers/TokenHandler";
 import { MessagesEntity } from "../entities/MessagesEntity";
+import { checkUserStatus } from "../handlers/UserHandler";
 
 @Resolver()
 export class AuthResolvers {
@@ -30,17 +31,7 @@ export class AuthResolvers {
 
             if (!isPasswordValid) throw new Error("no account");
 
-            switch (user.status) {
-                case UserStatusEnum.BANNED:
-                    throw new Error("BANNED");
-
-                case UserStatusEnum.CLOSED:
-                    throw new Error("CLOSED");
-
-                case UserStatusEnum.EXPIRE:
-                    throw new Error("EXPIRE");
-                default:
-            }
+            checkUserStatus(user.id);
 
             const token = createToken(user.id, user.tokenVersion);
 

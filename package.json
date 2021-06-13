@@ -1,0 +1,46 @@
+{
+  "name": "api.lotterry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "SET NODE_ENV=development && nodemon src/index.ts",
+    "build": "rimraf dist && tsc",
+    "start": "npm run build && node dist/index.js -p $PORT",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@typegoose/typegoose": "^7.6.1",
+    "apollo-server-express": "^2.25.1",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.6.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13",
+    "passport": "^0.4.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.12",
+    "@types/graphql": "^14.5.0",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/passport": "^1.0.4",
+    "nodemon": "^2.0.6",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "engines": {
+    "node": "14.15.1",
+    "npm": "6.14.8"
+  }
+}

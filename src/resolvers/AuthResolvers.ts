@@ -3,7 +3,6 @@ import { UsersEntity, UsersModel } from "../entities/UsersEntity";
 import { AppContext } from "../models/AppContext";
 import { GMT } from "../utils/time";
 import bcrypt from "bcrypt";
-import { UserStatusEnum } from "../models/User";
 import { createToken, sendToken } from "../handlers/TokenHandler";
 import { MessagesEntity } from "../entities/MessagesEntity";
 import { checkUserStatus } from "../handlers/UserHandler";

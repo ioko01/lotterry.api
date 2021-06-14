@@ -54,6 +54,7 @@ export class AuthResolvers {
             await user.save();
 
             res.clearCookie(process.env.COOKIE_NAME!);
+            console.log(process.env.COOKIE_NAME!);
             return { message: "logout" };
         } catch (error) {
             throw error;

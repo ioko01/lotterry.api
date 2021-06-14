@@ -55,7 +55,11 @@ export class AuthResolvers {
             user.tokenVersion = user.tokenVersion + 1;
             await user.save();
 
-            res.clearCookie(COOKIE_NAME!);
+            res.clearCookie(COOKIE_NAME!, {
+                httpOnly: true,
+                sameSite: "none",
+                secure: true,
+            });
             return { message: "logout" };
         } catch (error) {
             throw error;

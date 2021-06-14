@@ -2,7 +2,7 @@ import { sign, verify } from "jsonwebtoken";
 import { Response } from "express";
 import { privateKey, publicKey } from "../utils/keys";
 
-const { COOKIE_NAME, FRONT_URI } = process.env;
+const { COOKIE_NAME } = process.env;
 
 /**
  * @description สร้าง Token โดยใช้อัลกอริธึม RS256 มีอายุ 1 วัน
@@ -23,7 +23,7 @@ export const sendToken = (res: Response, token: string) =>
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        domain: FRONT_URI,
+        domain: "lotterry.herokuapp.com",
     });
 
 export const verifyToken = (token: string) =>

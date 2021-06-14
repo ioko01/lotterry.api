@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { UsersEntity, UsersModel } from "../entities/UsersEntity";
+import { UsersModel } from "../entities/UsersEntity";
 import { Messages } from "../models/Messages";
-import { UserRolesEnum, UserStatus } from "../models/User";
+import { UserRolesEnum } from "../models/User";
 import { GMT } from "../utils/time";
 
 export const createSuperAdmin = async (): Promise<Messages | null> => {
@@ -29,25 +29,5 @@ export const createSuperAdmin = async (): Promise<Messages | null> => {
         return { message: "success", statusCode: 200 };
     } else {
         return null;
-    }
-};
-
-export const checkUserStatus = async (
-    UID: string
-): Promise<UsersEntity | null> => {
-    const user = await UsersModel.findById(UID);
-    if (!user) throw new Error("please login");
-
-    switch (user.status as UserStatus) {
-        case "BANNED":
-            throw new Error("BANNED");
-        case "CLOSED":
-            throw new Error("CLOSE");
-        case "EXPIRE":
-            throw new Error("EXPIRE");
-        case "REGULAR":
-            return user;
-        default:
-            return null;
     }
 };

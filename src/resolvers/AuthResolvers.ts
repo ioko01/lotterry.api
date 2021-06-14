@@ -5,7 +5,7 @@ import { GMT } from "../utils/time";
 import bcrypt from "bcrypt";
 import { createToken, sendToken } from "../handlers/TokenHandler";
 import { MessagesEntity } from "../entities/MessagesEntity";
-import { checkUserStatus } from "../handlers/UserHandler";
+import { isAuthenticated } from "../handlers/AuthHandler";
 
 @Resolver()
 export class AuthResolvers {
@@ -30,7 +30,7 @@ export class AuthResolvers {
 
             if (!isPasswordValid) throw new Error("no account");
 
-            checkUserStatus(user.id);
+            isAuthenticated(user.id, user.tokenVersion);
 
             const token = createToken(user.id, user.tokenVersion);
 

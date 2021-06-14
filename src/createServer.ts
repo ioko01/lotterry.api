@@ -18,6 +18,11 @@ export default async () => {
 
     return new ApolloServer({
         schema,
+        playground: {
+            settings: {
+                "request.credentials": "include",
+            },
+        },
         context: async ({ req, res }: AppContext) => {
             const token = req.cookies[COOKIE_NAME!];
             try {

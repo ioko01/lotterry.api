@@ -21,7 +21,6 @@ export const createToken = (UID: string, tokenVersion: number) => {
 export const sendToken = (res: Response, token: string) =>
     res.cookie(COOKIE_NAME!, token, {
         httpOnly: true,
-        sameSite: "lax",
     });
 
 export const verifyToken = (token: string) =>

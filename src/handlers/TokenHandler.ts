@@ -19,9 +19,7 @@ export const createToken = (UID: string, tokenVersion: number) => {
  * เก็บ Token ไว้ใน Cookies
  */
 export const sendToken = (res: Response, token: string) =>
-    res.cookie(COOKIE_NAME!, token, {
-        httpOnly: true,
-    });
+    res.cookie(COOKIE_NAME!, token);
 
 export const verifyToken = (token: string) =>
     verify(token, publicKey, {

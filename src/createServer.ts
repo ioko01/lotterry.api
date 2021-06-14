@@ -20,7 +20,19 @@ export default async () => {
         schema,
         playground: {
             settings: {
+                "editor.cursorShape": "line",
+                "editor.fontFamily":
+                    "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace",
+                "editor.fontSize": 14,
+                "editor.reuseHeaders": true,
+                "editor.theme": "dark",
+                "general.betaUpdates": false,
                 "request.credentials": "include",
+                "schema.polling.enable": true,
+                "schema.polling.endpointFilter": "*localhost*",
+                "schema.polling.interval": 2000,
+                "tracing.hideTracingResponse": true,
+                "queryPlan.hideQueryPlanResponse": true,
             },
         },
         context: async ({ req, res }: AppContext) => {

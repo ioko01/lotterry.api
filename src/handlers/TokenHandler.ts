@@ -22,6 +22,7 @@ export const sendToken = (res: Response, token: string) =>
     res.cookie(COOKIE_NAME!, token, {
         httpOnly: true,
         sameSite: "none",
+        secure: true,
     });
 
 export const verifyToken = (token: string) =>

@@ -23,7 +23,6 @@ export const sendToken = (res: Response, token: string) =>
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        domain: "lotterry.herokuapp.com",
     });
 
 export const verifyToken = (token: string) =>

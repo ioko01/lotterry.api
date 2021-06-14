@@ -48,12 +48,14 @@ export class AuthResolvers {
     ): Promise<MessagesEntity | null> {
         try {
             const user = await UsersModel.findById(req.UID);
+            const { COOKIE_NAME } = process.env;
+
             if (!user) return null;
 
             user.tokenVersion = user.tokenVersion + 1;
             await user.save();
 
-            res.clearCookie(process.env.COOKIE_NAME!);
+            res.clearCookie(COOKIE_NAME!);
             return { message: "logout" };
         } catch (error) {
             throw error;

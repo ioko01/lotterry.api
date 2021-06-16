@@ -16,15 +16,15 @@ export enum UserStatusEnum {
 }
 
 export interface ChildID {
-    ADMID?: string; // ADMIN ID
-    AGEID?: string; // AGENT ID
-    EMPID?: string; // EMPOLYEE ID
+    ADMID?: string[]; // ADMIN ID
+    AGEID?: string[]; // AGENT ID
+    EMPID?: string[]; // EMPOLYEE ID
 }
 
 export interface ParentID {
-    SADMID?: string; // SUPER_ADMIN ID
-    ADMID?: string; // ADMIN ID
-    AGEID?: string; // AGENT ID
+    SADMID?: string[]; // SUPER_ADMIN ID
+    ADMID?: string[]; // ADMIN ID
+    AGEID?: string[]; // AGENT ID
 }
 
 export interface User {

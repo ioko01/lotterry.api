@@ -5,9 +5,9 @@
 
 """Child"""
 type ChildIDEntity {
-  ADMID: ID
-  AGEID: ID
-  EMPID: ID
+  ADMID: [ID!]
+  AGEID: [ID!]
+  EMPID: [ID!]
 }
 
 """
@@ -21,15 +21,16 @@ type MessagesEntity {
 }
 
 type Mutation {
+  createUser(password: String!, role: String!, username: String!): UsersEntity
   signin(password: String!, username: String!): UsersEntity
   signout: MessagesEntity
 }
 
 """Child"""
 type ParentIDEntity {
-  ADMID: ID
-  AGEID: ID
-  SADMID: ID
+  ADMID: [ID!]
+  AGEID: [ID!]
+  SADMID: [ID!]
 }
 
 type Query {

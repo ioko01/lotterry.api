@@ -11,32 +11,32 @@ import {
 
 @ObjectType({ description: "Child" })
 export class ChildIDEntity implements ChildID {
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    ADMID?: string;
+    ADMID?: string[];
 
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    AGEID?: string;
+    AGEID?: string[];
 
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    EMPID?: string;
+    EMPID?: string[];
 }
 
 @ObjectType({ description: "Child" })
 export class ParentIDEntity implements ParentID {
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    SADMID?: string;
+    SADMID?: string[];
 
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    ADMID?: string;
+    ADMID?: string[];
 
-    @Field(() => ID, { nullable: true })
+    @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
-    AGEID?: string;
+    AGEID?: string[];
 }
 
 @ObjectType({ description: "User" })

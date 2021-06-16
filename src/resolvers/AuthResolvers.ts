@@ -5,7 +5,8 @@ import { GMT } from "../utils/time";
 import bcrypt from "bcrypt";
 import { createToken, sendToken } from "../handlers/TokenHandler";
 import { MessagesEntity } from "../entities/MessagesEntity";
-import { isAuthenticated } from "../handlers/AuthHandler";
+import { isAuthenticated, isAuthorization } from "../handlers/AuthHandler";
+import { UserRolesEnum } from "../models/User";
 
 @Resolver()
 export class AuthResolvers {
@@ -28,6 +29,12 @@ export class AuthResolvers {
             if (!isPasswordValid) throw new Error("no account");
 
             await isAuthenticated(user.id, user.tokenVersion);
+            await isAuthorization(user, [
+                UserRolesEnum.SUPER_ADMIN,
+                UserRolesEnum.ADMIN,
+                UserRolesEnum.AGENT,
+                UserRolesEnum.EMPLOYEE,
+            ]);
 
             await UsersModel.updateOne({ username }, { lastActive: GMT() });
 

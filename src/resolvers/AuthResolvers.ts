@@ -16,10 +16,7 @@ export class AuthResolvers {
         @Ctx() { res }: AppContext
     ): Promise<UsersEntity | null> {
         try {
-            const user = await UsersModel.findOneAndUpdate(
-                { username },
-                { lastActive: GMT() }
-            );
+            const user = await UsersModel.findOne({ username });
 
             if (!user) throw new Error("no account");
 
@@ -30,7 +27,9 @@ export class AuthResolvers {
 
             if (!isPasswordValid) throw new Error("no account");
 
-            isAuthenticated(user.id, user.tokenVersion);
+            await isAuthenticated(user.id, user.tokenVersion);
+
+            await UsersModel.updateOne({ username }, { lastActive: GMT() });
 
             const token = createToken(user.id, user.tokenVersion);
 

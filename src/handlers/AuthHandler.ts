@@ -1,5 +1,5 @@
-import { UsersModel } from "../entities/UsersEntity";
-import { UserStatusEnum } from "../models/User";
+import { UsersEntity, UsersModel } from "../entities/UsersEntity";
+import { UserRoles, UserStatusEnum } from "../models/User";
 
 /**
  * @description ตรวจสอบไอดีที่ล็อกอินเข้ามาว่ามี Token แนบมาด้วยหรือไม่
@@ -16,4 +16,16 @@ export const isAuthenticated = async (UID?: string, tokenVersion?: number) => {
         throw new Error("not authentication");
 
     return isUser;
+};
+
+export const isAuthorization = async (
+    UsersModel: UsersEntity,
+    authorization: UserRoles[]
+) => {
+    const isAuthorize = authorization.find((res) => UsersModel.role === res);
+
+    if (!isAuthorize || UsersModel.status !== UserStatusEnum.REGULAR)
+        throw new Error("not authorization");
+
+    return true;
 };

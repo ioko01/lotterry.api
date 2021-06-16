@@ -8,7 +8,7 @@ export class UsersResolvers {
     @Query(() => UsersEntity, { nullable: true })
     async me(@Ctx() { req }: AppContext): Promise<UsersEntity | null> {
         try {
-            const user = isAuthenticated(req.UID, req.tokenVersion);
+            const user = await isAuthenticated(req.UID, req.tokenVersion);
 
             return user;
         } catch (error) {

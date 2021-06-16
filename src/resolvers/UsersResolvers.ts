@@ -1,3 +1,4 @@
+import { isAuthorization } from "./../handlers/AuthHandler";
 import { AppContext } from "./../models/AppContext";
 import { Ctx, Query, Resolver } from "type-graphql";
 import { UsersEntity } from "../entities/UsersEntity";
@@ -9,6 +10,12 @@ export class UsersResolvers {
     async me(@Ctx() { req }: AppContext): Promise<UsersEntity | null> {
         try {
             const user = await isAuthenticated(req.UID, req.tokenVersion);
+            await isAuthorization(user, [
+                "SUPER_ADMIN",
+                "ADMIN",
+                "AGENT",
+                "EMPLOYEE",
+            ]);
 
             return user;
         } catch (error) {

@@ -3,7 +3,7 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""Child"""
+"""ChildIDObject"""
 type ChildIDEntity {
   ADMID: [ID!]
   AGEID: [ID!]
@@ -21,12 +21,12 @@ type MessagesEntity {
 }
 
 type Mutation {
-  createUser(password: String!, role: String!, username: String!): UsersEntity
+  createUser(firstname: String!, lastname: String!, password: String!, role: String!, tagname: String, username: String!): UsersEntity
   signin(password: String!, username: String!): UsersEntity
   signout: MessagesEntity
 }
 
-"""Child"""
+"""ParentIDObject"""
 type ParentIDEntity {
   ADMID: [ID!]
   AGEID: [ID!]
@@ -41,11 +41,14 @@ type Query {
 type UsersEntity {
   child: ChildIDEntity
   createAt: DateTime!
+  firstname: String!
   id: ID!
   lastActive: DateTime
+  lastname: String!
   parent: ParentIDEntity
   role: String!
   status: String!
+  tagname: String
   updateAt: DateTime!
   username: String!
 }

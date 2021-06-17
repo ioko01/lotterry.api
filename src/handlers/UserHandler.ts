@@ -18,6 +18,8 @@ export const createSuperAdmin = async (): Promise<Messages | null> => {
         const createUser = await UsersModel.create({
             username: process.env.SUPERADMIN_USERNAME!,
             password: hashedPassword,
+            firstname: "superadmin",
+            lastname: "superadmin",
             role: UserRolesEnum.SUPER_ADMIN,
             lastActive: GMT(),
             updateAt: GMT(),

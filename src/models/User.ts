@@ -31,6 +31,9 @@ export interface User {
     id: string;
     username: string;
     password: string;
+    firstname: string;
+    lastname: string;
+    tagname?: string;
     role: UserRoles;
     child?: ChildID;
     parent?: ParentID;

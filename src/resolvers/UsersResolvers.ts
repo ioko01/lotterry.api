@@ -33,10 +33,15 @@ export class UsersResolvers {
         @Ctx() { req }: AppContext,
         @Arg("username") username: string,
         @Arg("password") password: string,
+        @Arg("firstname") firstname: string,
+        @Arg("lastname") lastname: string,
+        @Arg("tagname", { nullable: true }) tagname: string,
         @Arg("role") role: UserRoles
     ) {
         if (!username) throw new Error("username is not empty");
         if (!password) throw new Error("password is not empty");
+        if (!firstname) throw new Error("firstname is not empty");
+        if (!lastname) throw new Error("lastname is not empty");
         if (!role) throw new Error("role is not empty");
 
         const isValidateUsername = validateUsername(username);
@@ -57,6 +62,9 @@ export class UsersResolvers {
         const newUser = await UsersModel.create({
             username,
             password: hashedPassword,
+            firstname,
+            lastname,
+            tagname,
             role,
             parent: {
                 SADMID: [req.UID],

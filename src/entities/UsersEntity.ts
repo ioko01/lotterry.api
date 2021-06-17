@@ -1,6 +1,6 @@
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
 import { Schema } from "mongoose";
-import { Field, ID, ObjectType } from "type-graphql";
+import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 import {
     ChildID,
     ParentID,
@@ -9,7 +9,8 @@ import {
     UserStatusEnum,
 } from "../models/User";
 
-@ObjectType({ description: "Child" })
+@ObjectType({ description: "ChildIDObject" })
+@InputType("ChildIDInput")
 export class ChildIDEntity implements ChildID {
     @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
@@ -24,7 +25,8 @@ export class ChildIDEntity implements ChildID {
     EMPID?: string[];
 }
 
-@ObjectType({ description: "Child" })
+@ObjectType({ description: "ParentIDObject" })
+@InputType("ParentIDInput")
 export class ParentIDEntity implements ParentID {
     @Field(() => [ID], { nullable: true })
     @prop({ type: Schema.Types.ObjectId })
@@ -40,7 +42,8 @@ export class ParentIDEntity implements ParentID {
 }
 
 @ObjectType({ description: "User" })
-@modelOptions({ options: { customName: "Users" } })
+@modelOptions({ options: { customName: "Users", allowMixed: 0 } })
+@ArgsType()
 export class UsersEntity implements User {
     @Field(() => ID)
     id!: string;
@@ -51,6 +54,18 @@ export class UsersEntity implements User {
 
     @prop({ required: true })
     password!: string;
+
+    @Field()
+    @prop({ required: true, trim: true })
+    firstname!: string;
+
+    @Field()
+    @prop({ required: true, trim: true })
+    lastname!: string;
+
+    @Field({ nullable: true })
+    @prop({ trim: true })
+    tagname?: string;
 
     @Field(() => ChildIDEntity, { nullable: true })
     @prop()

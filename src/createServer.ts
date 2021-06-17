@@ -33,22 +33,30 @@ export default async () => {
                     if (decodedToken) {
                         req.UID = decodedToken.UID;
                         req.tokenVersion = decodedToken.tokenVersion;
-                        const user = await UsersModel.findById(req.UID);
-                        if (user) {
-                            //Check token version
-                            if (user.tokenVersion === req.tokenVersion) {
-                                user.tokenVersion = user.tokenVersion + 1;
-                                const updateUser = await user.save();
 
-                                if (updateUser) {
-                                    const token = createToken(
-                                        updateUser.id,
-                                        updateUser.tokenVersion
-                                    );
+                        //Check 1 hr to create token
+                        if (
+                            Date.now() / 1000 - decodedToken?.iat >
+                            60 * 60 * 1
+                        ) {
+                            const user = await UsersModel.findById(req.UID);
+                            if (user) {
+                                //Check token version
+                                if (user.tokenVersion === req.tokenVersion) {
+                                    user.tokenVersion = user.tokenVersion + 1;
+                                    const updateUser = await user.save();
 
-                                    req.tokenVersion = updateUser.tokenVersion;
+                                    if (updateUser) {
+                                        const token = createToken(
+                                            updateUser.id,
+                                            updateUser.tokenVersion
+                                        );
 
-                                    sendToken(res, token);
+                                        req.tokenVersion =
+                                            updateUser.tokenVersion;
+
+                                        sendToken(res, token);
+                                    }
                                 }
                             }
                         }

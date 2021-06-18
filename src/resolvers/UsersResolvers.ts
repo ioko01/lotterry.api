@@ -4,7 +4,7 @@ import { AppContext } from "./../models/AppContext";
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { UsersEntity, UsersModel } from "../entities/UsersEntity";
 import { isAuthenticated } from "../handlers/AuthHandler";
-import { User, UserRoles, UserRolesEnum } from "../models/User";
+import { UserRoles, UserRolesEnum } from "../models/User";
 import { validatePassword, validateUsername } from "../utils/validate";
 import { DocumentType } from "@typegoose/typegoose";
 import { GMT } from "../utils/time";
@@ -75,18 +75,18 @@ export class UsersResolvers {
 
         await newUser.save();
 
-        let child: User["child"] = {};
+        let child = {};
 
         if (newUser.role === ("ADMIN" as UserRoles))
-            child = { ADMID: [newUser.id] };
+            child = { "child.ADMID": newUser.id };
 
         if (newUser.role === ("AGENT" as UserRoles))
-            child = { AGEID: [newUser.id] };
+            child = { "child.AGEID": newUser.id };
 
         if (newUser.role === ("EMPLOYEE" as UserRoles))
-            child = { EMPID: [newUser.id] };
+            child = { "child.EMPID": newUser.id };
 
-        await UsersModel.updateOne({ _id: req.UID }, { child });
+        await UsersModel.updateMany({ _id: req.UID }, { $push: child });
 
         return newUser;
     }

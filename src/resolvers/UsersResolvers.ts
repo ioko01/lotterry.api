@@ -59,6 +59,14 @@ export class UsersResolvers {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        let parent = {};
+
+        if (user.role === ("SUPER_ADMIN" as UserRoles))
+            parent = { "parent.SADMID": req.UID };
+
+        if (user.role === ("ADMIN" as UserRoles))
+            parent = { "parent.ADMID": req.UID };
+
         const newUser = await UsersModel.create({
             username,
             password: hashedPassword,
@@ -66,9 +74,7 @@ export class UsersResolvers {
             lastname,
             tagname,
             role,
-            parent: {
-                SADMID: [req.UID],
-            },
+            parent,
             createAt: GMT(),
             updateAt: GMT(),
         } as DocumentType<UsersEntity>);
@@ -86,7 +92,11 @@ export class UsersResolvers {
         if (newUser.role === ("EMPLOYEE" as UserRoles))
             child = { "child.EMPID": newUser.id };
 
-        await UsersModel.updateMany({ _id: req.UID }, { $push: child });
+        await UsersModel.updateMany(
+            { _id: req.UID },
+            { $push: child },
+            { new: true }
+        );
 
         return newUser;
     }

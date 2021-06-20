@@ -36,8 +36,6 @@ export class AuthResolvers {
                 UserRolesEnum.EMPLOYEE,
             ]);
 
-            await UsersModel.updateOne({ username }, { lastActive: GMT() });
-
             const token = createToken(user.id, user.tokenVersion);
 
             sendToken(res, token);
@@ -66,6 +64,9 @@ export class AuthResolvers {
                 sameSite: "none",
                 secure: true,
             });
+
+            await UsersModel.updateOne({ _id: req.UID }, { lastActive: GMT() });
+
             return { message: "logout" };
         } catch (error) {
             throw error;

@@ -33,10 +33,7 @@ export default async () => {
                     if (decodedToken) {
                         req.UID = decodedToken.UID;
                         req.tokenVersion = decodedToken.tokenVersion;
-                        console.log(
-                            Date.now() / 1000 - decodedToken?.iat,
-                            60 * 60 * 1
-                        );
+
                         //Check 1 hr to create token
                         if (
                             Date.now() / 1000 - decodedToken?.iat >
